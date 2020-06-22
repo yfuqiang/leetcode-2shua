@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int romanToInt(string s) {
+        vector<int> store = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+        vector<string> strs = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
+        int res=0;
+        int i,j=0;
+        for(i=0;i<s.size();)
+        {
+            while(j<strs.size())
+            {
+                if(s.substr(i,strs[j].size())==strs[j])
+                {
+                    res+=store[j];
+                    i+=strs[j].size();
+                    break;
+                }
+                else
+                {
+                    j++;
+                }
+
+            }
+        }
+        return res;
+    
+
+
+    }
+};
