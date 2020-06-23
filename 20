@@ -1,0 +1,26 @@
+class Solution {
+public:
+    bool isValid(string s) {
+        stack<char> op;
+        unordered_map<char,char> m;
+        m['(']=')';
+        m['[']=']';
+        m['{']='}';
+        int i;
+        for(i=0;i<s.size();i++)
+        {
+            if(s[i]=='('||s[i]=='['||s[i]=='{')
+            op.push(s[i]);
+            else
+            {
+                if(op.empty()!=1&&s[i]==m[op.top()])
+                op.pop();
+                else
+                return false;
+            }
+        }
+        if(op.empty()!=1)
+        return false;
+        return true;
+    }
+};
