@@ -1,0 +1,31 @@
+class Solution {
+public:
+    string countAndSay(int n) {
+        string pre="1";
+        int i;
+        for(i=2;i<=n;i++)
+        {
+            string r;
+            int count=1;
+            for(int k=0;k<pre.size()-1;k++)
+            {
+                 
+                if(pre[k]==pre[k+1])
+                {
+                    count++;
+                    continue;
+                }
+                else
+                {
+                    r=r+to_string(count)+pre[k];
+                    count=1;
+                }
+            }
+            
+                r=r+to_string(count)+pre[pre.size()-1];
+            
+            pre=r;
+        }
+        return pre;
+    }
+};
