@@ -1,0 +1,23 @@
+class Solution {
+public:
+    double myPow(double x, int n) {
+        bool zheng=1;
+        if(n<0)
+        zheng=0;
+        n=abs(n);
+        double res=1.0;
+        int m=1;
+        while(n>0)
+        {
+            
+            bool flag=n&1;
+            if(flag)
+            res=res*x;
+            x*=x;
+            n>>=1;
+        }
+        if(zheng==0)
+        return 1.0/res;
+        return res;
+    }
+};
