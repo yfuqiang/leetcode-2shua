@@ -1,0 +1,36 @@
+class Solution {
+public:
+    vector<vector<int>> merge(vector<vector<int>>& intervals) {
+        if(intervals.size()==0)
+        return {};
+        sort(intervals.begin(),intervals.end(),[](vector<int> a,vector<int> b){
+            if(a[0]==b[0]) return a[1]<b[1];
+            else return a[0]<b[0];
+        });
+        int i;
+        vector<int> temp=intervals[0];
+        vector<vector<int>> res;
+        for(i=1;i<intervals.size();i++)
+        {  
+            if(intervals[i][0]==temp[0])
+            temp=intervals[i];
+            else
+            {
+                if(intervals[i][0]<=temp[1])
+                {
+                    if(temp[1]<intervals[i][1])
+                    temp={temp[0],intervals[i][1]};
+                    else
+                    continue;
+                }
+                else
+                {res.push_back(temp);
+                temp=intervals[i];}
+            }
+
+        }
+       
+        res.push_back(temp);
+        return res;
+    }
+};
