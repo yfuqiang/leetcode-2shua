@@ -1,0 +1,20 @@
+class Solution {
+public:
+    bool canJump(vector<int>& nums) {
+        int size = nums.size();
+        if(size == 0) return true;
+        vector<bool> dp(size, false);
+        //base case
+        dp[0] = true;
+        //状态转移方程
+        for(int i = 0; i < size; i++) {
+            for(int k = i - 1; k >= 0; k--) {  //从后往前，可以减低复杂度
+                if(dp[k] == true && k + nums[k] >= i) {
+                    dp[i] = true;
+                    break; 
+                }//反之不变
+            }
+        }
+        return dp[size - 1];
+    }
+};
