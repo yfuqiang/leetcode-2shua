@@ -1,0 +1,47 @@
+class Solution {
+public:
+   void setZeroes(vector<vector<int>>& matrix) {
+    bool row = false;//第一行是否需要置零
+    bool column = false;//第一列是否需要置零
+    for(int i = 0; i < matrix.size(); i++){
+        for(int j = 0; j < matrix[i].size(); j++){
+            if(matrix[i][j] == 0){
+                if( i == 0){
+                    row = true;//第一行需要置零
+                }
+                if(j == 0){
+                    column = true;//第一列需要置零
+                }
+                matrix[i][0] = 0;//第i行第一个元素置零，表示这一行需要全部置零
+                matrix[0][j] = 0;//第j列第一个元素置零，表示这一列需要全部置零
+            }
+        }   
+    }
+    for(int i = 1; i < matrix.size(); i ++){
+        if(matrix[i][0] == 0){//第i行第一个元素为零，表示这一行需要全部置零
+            for(int j = 1; j < matrix[i].size(); j++){
+                matrix[i][j] = 0;
+            }
+        }
+    }
+    for(int j = 1; j < matrix[0].size(); j ++){
+        if(matrix[0][j] == 0){//第j列第一个元素为零，表示这一列需要全部置零
+            for(int i = 1; i < matrix.size(); i++){
+                matrix[i][j] = 0;
+            }
+        }
+    }
+    if(row == true){//第一行需要置零
+        for(int j = 1; j < matrix[0].size(); j++){
+                matrix[0][j] = 0;
+        }
+    }
+    if(column == true){//第一列需要置零
+        for(int i = 1; i < matrix.size(); i++){
+                matrix[i][0] = 0;
+        }
+    }
+}
+
+
+};
