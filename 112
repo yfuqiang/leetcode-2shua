@@ -1,0 +1,29 @@
+class Solution {
+public:
+    //非递归模式，使用两个栈，一个栈保存节点一个栈保存遍历过的节点的总和
+    bool hasPathSum(TreeNode* root, int sum) {
+        if(!root) return false;
+        stack<TreeNode*> path;
+        //Stack<TreeNode> path = new Stack<>();
+        stack<int> sub;
+        path.push(root);
+        sub.push(root->val);
+        while(!path.empty()){
+            TreeNode* pnode = path.top();
+            path.pop();
+            int pval = sub.top();
+            sub.pop();
+            if(!pnode->left && !pnode->right && pval==sum) return true;
+           
+            if(pnode->left){
+                path.push(pnode->left);
+                sub.push(pval+pnode->left->val);
+            }
+            if(pnode->right){
+                path.push(pnode->right);
+                sub.push(pval+pnode->right->val);                          
+            }
+        }
+        return false;
+    }
+};
