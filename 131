@@ -1,0 +1,40 @@
+class Solution {
+public:
+    vector<vector<string>> partition(string s) {
+        dfs(s,0,0,{});
+        return res;
+    }
+    void dfs(string s,int i,int j,vector<string> temp)
+    {
+        if(j==s.length())
+        {
+            res.push_back(temp);
+            return;
+        }
+        int k,m;
+        for(k=j;k<s.length();k++)
+        {
+            if(s[k]==s[i])
+            {
+                string kk=s.substr(i,k-i+1);
+                string q=kk;
+                reverse(kk.begin(),kk.end());
+                if(kk==q)
+                {
+                string ss;
+                /*for(m=i;m<=k;m++)
+                 {
+                ss+=s[m];
+                 } */       
+                 temp.push_back(q);  
+                dfs(s,k+1,k+1,temp);
+                temp.pop_back();
+                }
+                
+            }
+        }
+        
+        return;
+    }
+    vector<vector<string>> res;
+};
