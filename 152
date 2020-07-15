@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int maxProduct(vector<int>& nums) {
+        vector<int> dp1(nums.size());
+        vector<int> dp2(nums.size());
+        int maxx=nums[0];
+        int i;
+        dp1[0]=nums[0];
+        dp2[0]=nums[0];
+        for(i=1;i<nums.size();i++)
+        {
+            dp1[i]=max(dp1[i-1]*nums[i],max(nums[i],dp2[i-1]*nums[i]));
+            dp2[i]=min(dp2[i-1]*nums[i],min(nums[i],dp1[i-1]*nums[i]));
+            if(dp1[i]>maxx)
+            maxx=dp1[i];   
+        }
+        return maxx;
+    }
+};
