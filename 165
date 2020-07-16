@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int compareVersion(string version1, string version2) {
+        char c;
+        string v1,v2;
+        istringstream its1(version1);
+        istringstream its2(version2);
+        int a1=0,a2=0;
+        while(its1.good()||its2.good())
+        {   
+            if(its1.good())
+             {
+                 getline(its1,v1,'.');
+                 a1=stoi(v1);
+             }
+             if(its2.good())
+             {
+                 getline(its2,v2,'.');
+                 a2=stoi(v2);
+             }
+            if(a1>a2) return 1;
+            if(a1<a2) return -1;
+            a1=0;
+            a2=0;
+        }
+        
+        return 0;
+    }
+};
