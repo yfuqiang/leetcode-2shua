@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int trailingZeroes(int n) {
+        int two=0;
+        int five=0;
+        long i=1;
+        while(i*5<=n)
+        {
+            int carry=0;
+            int a=i;
+            while(a%5==0)
+            {carry+=1;
+            a/=5;}
+            five+=(carry+1);
+            
+            i++;
+        }
+        return five;
+
+    }
+};
