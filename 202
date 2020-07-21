@@ -1,0 +1,22 @@
+class Solution {
+    int calNum(int n){
+        int ans = 0;
+        while(n){
+            ans += (n % 10)*(n % 10);
+            n /= 10;
+        }
+        return ans;
+    }
+public:
+    bool isHappy(int n) {
+        unordered_map<int, bool> nums;
+        while(1){
+            int sum = calNum(n);
+            if(sum == 1) return true;
+            else if(nums[sum]) return false;
+            nums[sum] = true;
+            n = sum;
+        }
+        return false;
+    }
+};
