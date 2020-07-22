@@ -1,0 +1,38 @@
+class Solution {
+public:
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        vector<int> ind(numCourses);
+        vector<vector<int>> graph(numCourses);
+        int i,j;
+        for(i=0;i<prerequisites.size();i++)
+        {
+            graph[prerequisites[i][1]].push_back(prerequisites[i][0]);
+            ind[prerequisites[i][0]]++;
+        }
+        bool flag=1;
+        int count=0;
+        while(flag)
+        {
+            for(i=0;i<ind.size();i++)
+            {
+                if(ind[i]==0)
+                {
+                    for(j=0;j<graph[i].size();j++)
+                    {
+                        ind[graph[i][j]]--;
+                    }
+                    flag=1;
+                    count++;
+                    ind[i]--;
+                    break;
+                }
+                flag=0;
+            }
+            
+        }
+        if(count==numCourses)
+        return true;
+        else 
+        return false;
+    }
+};
