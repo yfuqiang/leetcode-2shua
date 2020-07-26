@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int computeArea(int A, int B, int C, int D, int E, int F, int G, int H) {
+       long SS;
+       long l1=(D-B);
+       long h1=(C-A);
+       long l2=(H-F);
+       long h2=(G-E);
+       long S=l1*h1+l2*h2;
+        if(E>C||A>G||F>D||B>H)
+         SS=0;
+        else
+        {
+       long up,down,left,right;
+        up=min(D,H);
+        down=max(B,F);
+        left=max(A,E);
+        right=min(C,G);
+        SS=(up-down)*(right-left);
+        }
+        return S-SS;
+    }
+};
