@@ -1,0 +1,80 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool isPalindrome(ListNode* head) {
+        if(head==NULL||head->next==NULL)
+        return true;
+        
+        ListNode* slow=head;
+        ListNode* fast=head;
+        ListNode* pre=head;
+        ListNode* l=head;
+        ListNode* dummy=new ListNode(0);
+        int len=0;
+        int flag=1;
+        while(l)
+        {
+            len++;
+            l=l->next;
+        }
+        if(len%2==0)
+        flag=0;
+        while(fast&&fast->next)
+        {
+            pre=slow;
+            slow=slow->next;
+            fast=fast->next->next;
+        }
+        if(flag==0&&slow->val==pre->val)
+        {
+            while(slow!=NULL)
+            {
+                ListNode* hh= slow->next;
+                ListNode* h= dummy->next;
+                dummy->next=slow;
+                slow->next=h;
+                slow=hh;
+            }
+            pre->next=NULL;
+        }
+        else if(slow->next&&flag==1&&slow->next->val==pre->val)
+        {
+            slow=slow->next;
+            while(slow!=NULL)
+            {
+                ListNode* hh= slow->next;
+                ListNode* h= dummy->next;
+                dummy->next=slow;
+                slow->next=h;
+                slow=hh;
+            }
+            pre->next=NULL;
+        }
+        else
+        return false;
+
+        ListNode* k=dummy->next;
+        delete dummy;
+        while(k&&head)
+        {
+            if(k->val==head->val)
+            {
+                k=k->next;
+                head=head->next;
+            }
+            else
+            return false;
+        }
+        if(k==head&&k==NULL)
+        return true;
+        else
+        return false;
+    }
+};
