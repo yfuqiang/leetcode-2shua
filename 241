@@ -1,0 +1,40 @@
+class Solution {
+public:
+    vector<int> diffWaysToCompute(string input) {
+        return dfs(input,0,input.length());
+    }
+    vector<int> dfs(string input,int begin,int end)
+    {
+        int i;
+        vector<int> res; 
+        for(i=begin;i<end;i++)
+        {
+            if(input[i]=='+'||input[i]=='-'||input[i]=='*')
+            {
+            vector<int> v1=dfs(input,begin,i);
+            vector<int> v2=dfs(input,i+1,end);
+            for(auto c1:v1)
+                for(auto c2:v2)
+                {
+                    res.push_back(opera(input[i],c1,c2));
+                }
+            }
+        }
+        if(res.size()==0)
+        {
+            res.push_back(stoi(input.substr(begin,end-begin)));
+        }
+        return res;
+    }
+
+    int opera(char s,int v1,int v2)
+    {
+        if(s=='+')
+        return v1+v2;
+        else if(s=='-')
+        return v1-v2;
+        else if(s=='*')
+        return v1*v2;
+        return 0;
+    }
+};
