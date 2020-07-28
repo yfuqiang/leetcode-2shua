@@ -1,0 +1,30 @@
+class Solution {
+public:
+    bool isAnagram(string s, string t) {
+        int i;
+        unordered_map<char,int> m1;
+        unordered_map<char,int> m2;
+        if(s.size()!=t.size())
+        return false;
+        for(i=0;i<s.length();i++)
+        {
+            m1[s[i]]++;
+            m2[t[i]]++;
+        }
+        for(auto c:m1)
+        {
+            if(m2[c.first]==c.second)
+            continue;
+            else
+            return false;
+        }
+        for(auto c:m2)
+        {
+            if(m1[c.first]==c.second)
+            continue;
+            else
+            return false;
+        }
+        return true;
+    }
+};
