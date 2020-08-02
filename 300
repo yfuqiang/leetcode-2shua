@@ -1,0 +1,14 @@
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums) {
+        vector<int> minnums;//代表第i+1长度的最后一个数字
+        for(int v : nums)
+        {
+            if(!minnums.size() || v > minnums.back()) //如果最长的长度最后一个数字比当前小，则直接加上
+                minnums.push_back(v);
+            else
+                *lower_bound(minnums.begin(), minnums.end(), v) = v;//不然就更新这个数字的最大长度
+        }
+        return minnums.size();
+    }
+};
