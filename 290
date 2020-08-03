@@ -1,0 +1,31 @@
+class Solution {
+public:
+    bool wordPattern(string pattern, string str) {
+        stringstream ss(str);
+        string s;
+        unordered_map<char,string> m;
+        set<string> se;
+        int i=0;
+        while(getline(ss,s,' '))
+        {
+            if(i>=pattern.size())
+            return false;
+            if(m[pattern[i]]!="")
+            {
+                if(s!=m[pattern[i]])
+                return false;
+            }
+            else
+            {
+                if(se.count(s)!=0)
+                return false;
+                m[pattern[i]]=s;
+                se.insert(s);
+            }
+            i++;
+        }
+        if(i==pattern.size())
+        return true;
+        return false;
+    }
+};
