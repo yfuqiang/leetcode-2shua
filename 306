@@ -1,0 +1,59 @@
+class Solution {
+public:
+    bool isAdditiveNumber(string num) {
+            return dfs(num,0,{});
+    }
+
+    bool dfs(string num,int begin,vector<string> temp)
+    {
+        int i;
+        bool flag=0;
+        if(temp.size()==3)
+        {
+            int n1=temp[0].size()-1;
+            int n2=temp[1].size()-1;
+            int carry=0;
+            string ans;
+            while(n1>=0||n2>=0||carry>0){
+                int t1=n1>=0?temp[0][n1--]-'0':0;
+                int t2=n2>=0?temp[1][n2--]-'0':0;
+                ans+=(t1+t2+carry)%10+'0';
+                carry=(t1+t2+carry)>=10?1:0;
+            }
+            reverse(ans.begin(),ans.end());
+            if(ans==temp[2])
+            {
+                if(begin==num.length())
+                return true;
+                else
+                {
+                temp.erase(temp.begin());
+                flag|=dfs(num,begin,temp);
+                }
+            }
+        }
+
+        else
+        {
+        if(num[begin]=='0')
+        {
+            temp.push_back("0");
+            flag=dfs(num,begin+1,temp);
+        }
+        else
+        {
+            for(i=begin;i<num.length();i++)
+            {
+                string k=num.substr(begin,i-begin+1);
+                temp.push_back(k);
+                flag|=dfs(num,i+1,temp);
+                if(flag==1)
+                break;
+                temp.pop_back();
+            }
+        }
+        }
+        return flag;
+        
+    }
+};
