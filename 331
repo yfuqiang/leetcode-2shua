@@ -1,0 +1,37 @@
+class Solution {
+public:
+    bool isValidSerialization(string preorder) {
+        stringstream ss(preorder);
+        vector<string> s;
+        string w;
+        while(getline(ss,w,','))
+        {
+            s.push_back(w);
+        }
+        queue<string> q;
+        if(s[0]!="#")
+        q.push(s[0]);
+        int i;
+        for(i=1;i<s.size();)
+        {
+            if(q.empty()==1)
+            break;
+            if(s[i]!="#")
+            {
+                q.push(s[i]);
+            }
+            i++;
+            if(i==s.size())
+            return false;
+            if(s[i]!="#")
+            {
+                q.push(s[i]);
+            }
+            i++;
+            q.pop();
+        }
+        if(q.empty()!=1||(i!=s.size()))
+        return false;
+        return true;
+    }
+};
