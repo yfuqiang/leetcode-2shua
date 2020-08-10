@@ -1,0 +1,44 @@
+class Solution {
+public:
+    vector<string> findItinerary(vector<vector<string>>& tickets) {
+        int i,j;
+       
+        vector<string> city;
+        for(auto c:tickets)
+        {
+            city.push_back(c[0]);
+            city.push_back(c[1]);
+        }
+        
+        sort(city.begin(),city.end());
+        city.erase(unique(city.begin(), city.end()), city.end());//去重，注意
+        int N = city.size();
+        vector<vector<int>> graph(N,vector<int>(N,0));
+        map<string,int> m;
+         for (int i = 0; i < N; ++i) {
+            m[city[i]] = i;
+        }
+        for (auto& t : tickets) {
+            ++graph[m[t[0]]][m[t[1]]];
+        }
+        vector<int> path;
+        dfs(graph, m["JFK"], N, path);
+        vector<string> res;
+        for (auto i : path) {
+            res.push_back(city[i]);
+        }
+        reverse(res.begin(), res.end());
+        return res;
+    }
+        // Hierholzer 算法
+    void dfs(vector<vector<int> >& graph, int i, int N, vector<int>& path) {
+        for (int j = 0; j < N; ++j) {
+            if (graph[i][j] > 0) {
+                --graph[i][j];
+                dfs(graph, j, N, path);
+            }
+        }
+        path.push_back(i);
+    }
+
+};
