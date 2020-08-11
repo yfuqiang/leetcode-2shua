@@ -1,0 +1,13 @@
+class Solution {
+public:
+    bool isPowerOfFour(int num) {
+        if(num==0)
+        return false;
+        float a;
+        a=log(num)/log(4);
+        if(floor(a)==a)
+        return true;
+        else
+        return false;
+    }
+};
