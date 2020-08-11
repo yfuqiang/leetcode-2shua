@@ -1,0 +1,19 @@
+class Solution {
+public:
+    string reverseVowels(string s) {
+        int i=0,j=s.size()-1;
+        unordered_set<char> m{'a','e','i','o','u','A','E','I','O','U'};
+        while(i<j)
+        {
+            while(m.find(s[i])==m.end()&&i<j)
+            i++;
+            while(m.find(s[j])==m.end()&&i<j)
+            j--;
+            if(i<j)
+            {swap(s[i],s[j]);i++;j--;}
+            else
+            break;
+        }
+        return s;
+    }
+};
