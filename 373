@@ -1,0 +1,41 @@
+struct cmp{
+    bool operator()(pair<int,vector<int>> p1,pair<int,vector<int>> p2)
+    {
+        return p1.first<p2.first;
+    }
+};
+
+class Solution {
+public:
+    vector<vector<int>> kSmallestPairs(vector<int>& nums1, vector<int>& nums2, int k) {
+        vector<vector<int>> res;
+        int i,j;
+        priority_queue<pair<int,vector<int>>,vector<pair<int,vector<int>>>,cmp> q;
+        for(i=0;i<nums1.size();i++)
+        {
+            for(j=0;j<nums2.size();j++)
+            {
+                int s=nums1[i]+nums2[j];
+                vector<int> a={nums1[i],nums2[j]};
+                if(q.size()<k)
+                {
+                    q.push(make_pair(s,a));
+                }
+                else
+                {
+                    if(q.top().first>s)
+                    {
+                        q.pop();
+                        q.push(make_pair(s,a));
+                    }
+                }
+            }
+        }
+        while(q.empty()!=1)
+        {
+            res.push_back(q.top().second);
+            q.pop();
+        }
+        return res;
+    }
+};
