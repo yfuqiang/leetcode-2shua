@@ -1,0 +1,70 @@
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        int sum=0;
+        int i=0,j;
+        if(height.size()==0)
+        return 0;
+        while(i<height.size()&&height[i]==0)
+        {
+            i++;
+        }
+        for(i;i<height.size();i++)
+        {
+            int h=height[i];
+            for(j=i+1;j<height.size();j++)
+            {
+                if(height[j]>=height[i])
+                break;
+            }
+            if(j==height.size())
+            {
+                if((i+1)>=height.size()||height[i+1]>height[i])
+                continue;
+                else
+                {
+                    int ma=height[i+1];
+                    int k=i+1;
+                    for(j=i+2;j<height.size();j++)
+                    {
+                        if(height[j]>ma)
+                        {ma=height[j];k=j;}
+                    }
+                    if(k==i+1)
+                    continue;
+                    else
+                    {
+                        int l=i;
+                        int r=k;
+                        int hh=min(height[l],height[r]);
+                        int all=hh*(r-l-1);
+                        int w=l+1;
+                        while(w<r)
+                        {
+                            all-=height[w];
+                            w++;
+                        }
+                        sum+=all;
+                        i=k-1;
+                    }
+                }
+            }
+            else
+            {
+                int l=i;
+                int r=j;
+                int hh=min(height[l],height[r]);
+                int all=hh*(j-i-1);
+                int w=l+1;
+                while(w<j)
+                {
+                    all-=height[w];
+                    w++;
+                }
+                sum+=all;
+                i=j-1;
+            }
+        }
+        return sum;
+    }
+};
