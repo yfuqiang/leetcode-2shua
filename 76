@@ -1,0 +1,74 @@
+class Solution {
+public:
+    string minWindow(string s, string t) {
+        string res;
+        
+        map<char,int> m;
+        map<char,int> ms;
+        for(auto c:t)
+        {
+            m[c]++;
+        }
+        int count=0;
+        int l=0,r=0;
+        while(l<s.size())
+        {
+            if(m[s[l]]==0)
+                l++;
+                else
+                break;
+        }
+        r=l;
+        while(r<s.size())
+        {
+            if(m[s[r]]>0)
+            {
+                ms[s[r]]++;
+                if(ms[s[r]]<=m[s[r]])
+                count++;
+            }
+            if(count==t.size())
+            {
+                string temp=s.substr(l,r-l+1);
+                if(res.size()==0||temp.size()<res.size())
+                res=temp;
+                
+                while(l<=r)
+                {
+                
+                    if(ms[s[l]]<=m[s[l]]&&ms[s[l]]>0)
+                    {
+                        ms[s[l]]--;
+                        l++;
+                        count--;
+                        break;
+                    }
+                        if(ms[s[l]]>m[s[l]])
+                        {
+                            ms[s[l]]--;
+                            l++;
+                           string temp=s.substr(l,r-l+1);
+                           if(temp.size()<res.size())
+                           res=temp;
+                           
+                        }
+                        else if(m[s[l]]==0)
+                        {
+                            l++;
+                         string temp=s.substr(l,r-l+1);
+                           if(temp.size()<res.size())
+                           res=temp;
+                           
+                        }
+                        else
+                       {  
+                           count--;break;}
+                         }
+            }
+            
+                    r++;
+        }
+        return res;
+
+    }
+};
