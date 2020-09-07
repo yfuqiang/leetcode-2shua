@@ -1,0 +1,31 @@
+class Solution {
+public:
+    vector<int> findAnagrams(string s, string p) {
+        map<char,int> sm,pm;
+        vector<int> res;
+        for(int i=0;i<p.length();i++)
+        {
+            pm[p[i]]++;//建立结果集字符表
+        }
+        int left,right;
+        int reslength=p.size();
+        for(left=0,right=0;right<s.length();)
+        {
+            if(pm[s[right]]>0)//当前字符是结果集的，那么就可以减去
+            reslength--;
+            pm[s[right]]--;
+            if(reslength==0)//完全符合，则放入
+            res.push_back(left);
+            right++;
+            if(right-left==p.length())//长度大于p
+            {
+                if(pm[s[left]]>=0)//如果left在结果集中，这里由于left已经减过1，这里只需判断大于等于
+                reslength++;
+                pm[s[left]]++;
+                left++;
+            }
+        }
+        
+        return res;
+    }
+};
