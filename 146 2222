@@ -1,0 +1,108 @@
+struct Node{
+    Node* prev;
+    Node* next;
+    pair<int,int> p;
+    Node(pair<int,int> pp={-1,-1}){
+        prev=NULL;
+        next=NULL;
+        p=pp;
+    }
+};
+
+class LRUCache {
+public:
+    Node* first;
+    Node* tail;
+    int cap;
+    int size_lru=0;
+    map<int,Node*> m;
+    LRUCache(int capacity) {
+        first=new Node({-1,-1});
+        tail=new Node({-1,-1});
+        first->next=tail;
+        tail->prev=first;
+        cap=capacity;
+        size_lru=0;
+    }
+    
+    int get(int key) {
+        if(m.find(key)!=m.end())
+        {
+            pair<int,int> k=m[key]->p;
+            Node* s=m[key];
+            s->prev->next=s->next;
+            s->next->prev=s->prev;
+
+            Node* n=new Node(k);
+            Node* ne=first->next;
+            first->next=n;
+            n->prev=first;
+            n->next=ne;
+            ne->prev=n;
+
+            m[key]=n;
+            return k.second;
+        }
+        return -1;
+    }
+    
+    void put(int key, int value) {
+        if(m.find(key)!=m.end())
+        {
+            Node* s=m[key];
+            s->prev->next=s->next;
+            s->next->prev=s->prev;
+            pair<int,int> k{key,value};
+              Node* n=new Node(k);
+            Node* ne=first->next;
+            first->next=n;
+            n->prev=first;
+            n->next=ne;
+            ne->prev=n;
+
+            m[key]=n;
+            
+        }
+        else
+        {
+            if(size_lru<cap)
+            {
+                pair<int,int> k{key,value};
+                  Node* n=new Node(k);
+                Node* ne=first->next;
+                first->next=n;
+                n->prev=first;
+                n->next=ne;
+                ne->prev=n;
+
+                m[key]=n;
+                size_lru++;
+            }
+            else
+            {
+                Node* tmp=tail->prev;
+                tmp->prev->next=tail;
+                tail->prev=tmp->prev;
+                
+                m.erase(tmp->p.first);
+                delete tmp;
+                pair<int,int> k{key,value};
+                Node* ne=first->next;
+                  Node* n=new Node(k);
+                first->next=n;
+                n->prev=first;
+                n->next=ne;
+                ne->prev=n;
+
+                m[key]=n;
+            }
+        }
+    }
+};
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache* obj = new LRUCache(capacity);
+ * int param_1 = obj->get(key);
+ * obj->put(key,value);
+ */
