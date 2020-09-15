@@ -1,0 +1,34 @@
+class Solution {
+public:
+    string minWindow(string s, string t) {
+        int left=0,right=0;
+        unordered_map<char,int> mt;
+        unordered_map<char,int> ms;
+        for(auto c:t)
+        {
+            mt[c]++;
+        }
+        int count=0;
+        string res;
+        while(right<s.size())
+        {
+            if(mt.find(s[right])!=mt.end()&&ms[s[right]]<=mt[s[right]])
+                count++;
+            while(count==t.size())
+            {
+                if((res=="")||(right-left+1<res.size()))
+                {
+                    res=s.substr(left,right-left+1);
+                }
+                ms[s[left]]--;
+                if(mt.find(s[left])!=mt.end()&&ms[s[left]]<mt[s[left]])
+                {
+                        count--;
+                }
+                left++;
+            }
+            right++;
+        }
+        return res;
+    }
+};
