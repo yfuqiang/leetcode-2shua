@@ -1,0 +1,43 @@
+class Solution {
+public:
+    vector<string> letterCombinations(string digits) {
+        unordered_map<char,vector<char>> m;
+        if(digits.size()==0)
+        return {};
+        m['2']={'a','b','c'};
+        m['3']={'d','e','f'};
+        m['4']={'g','h','i'};
+        m['5']={'j','k','l'};
+        m['6']={'m','n','o'};
+        m['7']={'p','q','r','s'};
+        m['8']={'t','u','v'};
+        m['9']={'w','x','y','z'};
+
+        vector<vector<char>> k;
+        for(int i=0;i<digits.size();i++)
+        {
+            k.push_back(m[digits[i]]);
+        }
+        string temp;
+        dfs(k,0,temp);
+        return res;
+
+    }
+
+    void dfs(vector<vector<char>> k,int begin,string temp)
+    {
+        if(begin==k.size())
+        {res.push_back(temp);
+        return;}
+        int i;
+        for(i=0;i<k[begin].size();i++)
+        {
+            string s=temp;
+            s+=k[begin][i];
+            dfs(k,begin+1,s);
+        }
+        return;
+
+    }
+    vector<string> res;
+};
